@@ -1,0 +1,2 @@
+# Online Time Capsule
+The Time Capsule Website allows users to create and store digital messages, photos, and content to be delivered at a future date. Whether for personal reflection or sharing memories with loved ones, this platform ensures your messages are securely preserved and revealed at the right moment.
