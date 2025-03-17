@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --font-600: "Oswald", sans-serif;
+    --font-500: "Poppins", sans-serif;
+
+    --clr-100: #1E1E1E;
+    --clr-200: #fff;
+    --clr-300: #F3EC78; 
+    --clr-400: #AF4261;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: var(--font-500);
+    color: var(--clr-200);
+}
+
+.hidden { display: none; }
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+
+    width: 100%;
+    height: 100vh;
+
+    background-color: var(--clr-100);
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.timer-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+
+    width: 50%;
+    height: 10%;
+    border-image: linear-gradient(to right, var(--clr-300), var(--clr-400)) 1 / 3px;
+    border-style: solid;
+    border-width: 1px;
+
+    overflow: hidden;
+
+    background-color: inherit;
+    
+    /* background: linear-gradient(to right, var(--clr-300), var(--clr-400));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+
+    .digit-wrapper {
+        width: 2%;
+        height: 100%;
+        text-align: center;
+
+        font-size: 2rem;
+        font-family: var(--font-600);
+        font-weight: 600;
+
+        transition: all 0.5s;
+        
+        .digits {
+            display: flex;
+            align-items: center;
+
+            height: 100%;
+        }
+    }
+
+    .digit-wrapper:hover {
+        transform: translateY(-93px); /* Increment by -93px */
+    }
+
+    .time-frame-selector {
+        align-self: center;
+
+        width: 10%;
+        height: 25%;
+
+        background-color: transparent;
+        border: none;
+
+        .options { 
+            background-color: #2C2C2C; 
+            font-family: var(--font-600);
+            font-weight: 600;
+        }
+    }
+}
+
+/* .timer-wrapper::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+
+    height: 107%;
+    width: 102%;
+    padding: 2rem;
+
+    background: linear-gradient(to right, var(--clr-300), var(--clr-400));
+} */
+
+.btn {
+    width: 299px; /* 299px */
+    height: 47px; /* 47px */
+
+    font-size: 1.2rem;
+
+    border-radius: 20px; /* 20px */
+    border: none;
+    
+    transition: all 0.5s;
+}
+
+#create {
+    background-color: var(--clr-300);
+    color: var(--clr-400);
+}
+
+#delete {
+    background-color: var(--clr-400);
+    color: var(--clr-300);
+}
+
+.btn:hover { transform: scale(1.1); }
