@@ -1,4 +1,21 @@
 import './style.css'
+import { Client, Databases } from 'appwrite'
+
+
+// console.log('hello')
+
+const PROJECT_ID = ''
+const DATABASE_ID = ''
+const USERTOKEN_ID = ''
+
+const client = new Client()
+client.setProject('')
+
+const db = new Databases(client)
+
+
+const userToken = localStorage.getItem('userToken')
+const userHasDatabase = localStorage.getItem('userHasDatabase')
 
 /**
  * Display a number of the timer
@@ -16,11 +33,22 @@ function displayNum(num) {
     })
 }
 
-// setInterval(() => {
-//     const randomNum = Math.floor( Math.random() * 9999999 )
-//     displayNum(randomNum)
-// }, 3000);
+/**
+ * This function get a user time capsule infomation
+ * @param {string} userToken 
+ * @returns userData
+ */
+async function getData(userToken) {
+    return    
+}
 
-    
-displayNum(264719)
-// displayNum(999999)
+if (userHasDatabase) {
+    console.log('get user time capsule')
+}
+
+if (!userHasDatabase) {
+    setInterval(() => {
+        const randomNum = Math.floor( Math.random() * 9999999 )
+        displayNum(randomNum)
+    }, 3000);
+}
