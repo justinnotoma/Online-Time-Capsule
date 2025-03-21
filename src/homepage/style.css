@@ -75,10 +75,6 @@ h1 {
         }
     }
 
-    .digit-wrapper:hover {
-        transform: translateY(-93px); /* Increment by -93px */
-    }
-
     .time-frame-selector {
         align-self: center;
 
