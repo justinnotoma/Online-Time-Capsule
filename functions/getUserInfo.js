@@ -12,12 +12,17 @@ export default async ({req, res, log, error}) => {
     const db = new Databases(client)
 
     if (req.method == 'GET') {
-        const respone = await db.listDocuments(
-            DB_ID,
-            COLLECTION_USERINFO_ID
-        )
+        try {
+            const respone = await db.listDocuments(
+                DB_ID,
+                COLLECTION_USERINFO_ID
+            )   
+        } catch (error) {
+            return res.json({"error": error})
+        }
         
-    return res.json(respone.documents)
+        return res.json(respone.documents)
     }
 
+    return res.send("Test fail")
 }
