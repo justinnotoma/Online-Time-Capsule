@@ -1,4 +1,4 @@
-const projectID = process.env.project_ID
+const projectID = process.env.PROJECT_ID
 
 export default async ({req, res, logs, error}) => {
     if (req.method == 'GET') return res.json( {"prjectID": projectID} )
