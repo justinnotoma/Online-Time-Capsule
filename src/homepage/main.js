@@ -1,21 +1,17 @@
 import './style.css'
-import { Client, Databases } from 'appwrite'
+import { Client, ExecutionMethod, Functions } from 'appwrite'
 
-
-// console.log('hello')
-
-const PROJECT_ID = ''
-const DATABASE_ID = ''
-const USERTOKEN_ID = ''
-
-const client = new Client()
-client.setProject('')
-
-const db = new Databases(client)
-
-
+const projectID = import.meta.env.VITE_PROJECT_ID
 const userToken = localStorage.getItem('userToken')
 const userHasDatabase = localStorage.getItem('userHasDatabase')
+
+const client = new Client()
+    .setProject(projectID)
+    .setEndpoint("https://cloud.appwrite.io/v1")
+const functions = new Functions(client)
+
+
+
 
 /**
  * Display a number of the timer
@@ -42,9 +38,13 @@ async function getData(userToken) {
     return    
 }
 
+
 if (userHasDatabase) {
-    console.log('get user time capsule')
+    const req = await functions.createExecution('67ddc5a00015a21d4ce8', JSON.stringify( {"userID": userToken} ), undefined, undefined, ExecutionMethod.GET)
+
+    console.log(await req.responseBody)
 }
+
 
 if (!userHasDatabase) {
     setInterval(() => {
