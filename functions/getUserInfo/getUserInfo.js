@@ -9,7 +9,9 @@ export default async ({req, res, log, error}) => {
     client.setEndpoint('https://cloud.appwrite.io/v1')
     client.setProject(PROJECT_ID)
 
-    const db = new Databases(client)
+    return res.json({"project ID": PROJECT_ID, "db ID": DB_ID, "collections ID": COLLECTION_USERINFO_ID})
+
+    /* const db = new Databases(client)
 
     if (req.method == 'GET') {
         try {
@@ -24,5 +26,5 @@ export default async ({req, res, log, error}) => {
         return res.json(respone.documents)
     }
 
-    return res.send("Test fail")
+    return res.send("Test fail") */
 }
