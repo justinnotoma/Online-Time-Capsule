@@ -15,12 +15,12 @@ export default async ({req, res, log, error}) => {
             const respone = await db.listDocuments(
                 DB_ID,
                 COLLECTION_USERINFO_ID,
-                [
+                /* [
                     Query.equal('userToken', req.body['userID'])
-                ]
+                ] */
             )
 
-            return res.json( {"results": respone.documents} )
+            return res.json( {"results": respone.documents, "request body": req.body['userID']} )
         } catch (error) {
             return res.json( {"error": error} )
         }
