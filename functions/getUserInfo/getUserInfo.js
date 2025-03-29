@@ -16,7 +16,7 @@ export default async ({req, res, log, error}) => {
                 DB_ID,
                 COLLECTION_USERINFO_ID,
                 [
-                    Query.equal( "userToken", [req.body] )
+                    Query.equal( "userToken", [JSON.parse(req.body["userID"])] )
                 ]
             )
 
