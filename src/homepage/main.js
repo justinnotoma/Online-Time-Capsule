@@ -29,20 +29,21 @@ function displayNum(num) {
     })
 }
 
-/**
- * This function get a user time capsule infomation
- * @param {string} userToken 
- * @returns userData
- */
-async function getData(userToken) {
-    return    
+
+function calcData() {
+    return
 }
 
 
 if (userHasDatabase) {
     const req = await functions.createExecution('67ddc5a00015a21d4ce8', JSON.stringify( {"userID": userToken} ), undefined, undefined, ExecutionMethod.GET)
 
-    console.log(await req.responseBody)
+    if (req.responseBody === '') {
+        console.error('Error 404: can\'t find user information')
+    } else {
+        console.log(await req.responseBody)
+    }
+
 }
 
 
