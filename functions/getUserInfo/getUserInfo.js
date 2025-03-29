@@ -11,7 +11,6 @@ export default async ({req, res, log, error}) => {
     const db = new Databases(client)
 
     if (req.method == "GET") {
-        console.log(req.body)
         try {
             const respone = await db.listDocuments(
                 DB_ID,
@@ -19,7 +18,7 @@ export default async ({req, res, log, error}) => {
                 req.body['userID']
             )
 
-            return res.json( {"results": respone.documents} )
+            return res.json( {"results": respone.documents, "test info": req.body} )
         } catch (error) {
             return res.json( {"error": error} )
         }
