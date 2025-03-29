@@ -15,9 +15,9 @@ export default async ({req, res, log, error}) => {
             const reqDB = await db.listDocuments(
                 DB_ID,
                 COLLECTION_USERINFO_ID,
-                /* [
+                [
                     Query.equal('userToken', req.body['userID'])
-                ] */
+                ]
             )
 
             return res.json( {"results": reqDB.documents, "request body": req.body} )
