@@ -1,4 +1,4 @@
-import { Client, Databases } from "node-appwrite"
+import { Client, Databases, Query } from "node-appwrite"
 
 const PROJECT_ID = process.env.PROJECT_ID
 const DB_ID = process.env.DB_ID
@@ -15,10 +15,12 @@ export default async ({req, res, log, error}) => {
             const respone = await db.listDocuments(
                 DB_ID,
                 COLLECTION_USERINFO_ID,
-                req.body['userID']
+                [
+                    Query.equal('userToken', req.body['userID'])
+                ]
             )
 
-            return res.json( {"results": respone.documents, "test info": req.body} )
+            return res.json( {"results": respone.documents} )
         } catch (error) {
             return res.json( {"error": error} )
         }
