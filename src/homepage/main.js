@@ -6,11 +6,11 @@ const userToken = localStorage.getItem('userToken')
 const userHasDatabase = localStorage.getItem('userHasDatabase')
 
 const client = new Client()
-    .setProject(projectID)
     .setEndpoint("https://cloud.appwrite.io/v1")
+    .setProject(projectID)
 const functions = new Functions(client)
 
-
+console.log('projectId: ' + projectID)
 
 
 /**
@@ -36,13 +36,19 @@ function calcData() {
 
 
 if (userHasDatabase) {
-    const req = await functions.createExecution('67ddc5a00015a21d4ce8', JSON.stringify( {"userID": userToken} ), undefined, undefined, ExecutionMethod.GET)
-    
-    if (req.responseBody === '') {
-        console.error('Error 404: can\'t find user information')
-    } else {
-        console.log(await req.responseBody)
+    const FUNCTION_ID = '67ddc5a00015a21d4ce8'
+
+    try {
+        const req = await functions.createExecution(FUNCTION_ID, JSON.stringify( {"userID": userToken} ), undefined, undefined, ExecutionMethod.GET)
+        if (req.responseBody === '') console.error('Error 404: can\'t find user information')
+        else {
+            console.log(await req.responseBody)
+        }
+
+    } catch (error) {
+        console.log({"Error": error.message})
     }
+    
 
 }
 
