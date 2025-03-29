@@ -12,7 +12,7 @@ export default async ({req, res, log, error}) => {
 
     if (req.method == "GET") {
         try {
-            const respone = await db.listDocuments(
+            const reqDB = await db.listDocuments(
                 DB_ID,
                 COLLECTION_USERINFO_ID,
                 /* [
@@ -20,7 +20,7 @@ export default async ({req, res, log, error}) => {
                 ] */
             )
 
-            return res.json( {"results": respone.documents, "request body": req.body['userID']} )
+            return res.json( {"results": reqDB.documents, "request body": req.body} )
         } catch (error) {
             return res.json( {"error": error} )
         }
