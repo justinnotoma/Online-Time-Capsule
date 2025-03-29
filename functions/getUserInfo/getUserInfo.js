@@ -11,13 +11,14 @@ export default async ({req, res, log, error}) => {
     const db = new Databases(client)
 
     if (req.method == "GET") {
+        return res.json({"request userId": req.body.userID})
         try {
             const reqDB = await db.listDocuments(
                 DB_ID,
                 COLLECTION_USERINFO_ID,
-                /*[
-                    Query.equal("userToken", [req.body['userID']])
-                ]*/
+                [
+                    Query.equal( "userToken", [req.body.userID] )
+                ]
             )
 
             return res.json( {"results": reqDB.documents, "request body": req.body} )
