@@ -6,6 +6,16 @@ const userToken = localStorage.getItem('userToken')
 const userHasDatabase = localStorage.getItem('userHasDatabase')
 
 
+const todayDate = new Date()
+const currentYear = todayDate.getFullYear()
+const currentMonth = todayDate.getMonth() + 1
+const currentDate = todayDate.getDate()
+
+let userYear;
+let userMonth;
+let userDate;
+
+
 /**
  * Display a number of the timer
  * @param {Number} num 
@@ -20,6 +30,11 @@ function displayNum(num) {
         const numShift = parseInt(digit) * -92.5
         digitWrappers[index + startingDigit].style.transform = `translateY(${numShift}px)`
     })
+}
+
+function resetTimer() {
+    const digitWrappers = document.getElementsByClassName('digit-wrapper')
+    for(const digitWrapper of digitWrappers) { digitWrapper.style.transform = `translateY(0px)` }
 }
 
 /**
@@ -42,15 +57,11 @@ function findUser(allUsersList) {
  * @returns inBetweenDates
  */
 function calcBetweenTime(date) {
-    const todayDate = new Date()
-    const currentYear = todayDate.getFullYear()
-    const currentMonth = todayDate.getMonth() + 1
-    const currentDate = todayDate.getDate()
-
     const userDateParts = date.split('-')
-    const userYear = parseInt( userDateParts[0] )
-    const userMonth = parseInt( userDateParts[1] )
-    const userDate = parseInt( userDateParts[2].split('T')[0] )
+
+    userYear = parseInt( userDateParts[0] )
+    userMonth = parseInt( userDateParts[1] )
+    userDate = parseInt( userDateParts[2].split('T')[0] )
     
     // Calculations
     const yearsInbetween = userYear - currentYear
@@ -102,8 +113,7 @@ function calcBetweenMonths(startMonth, endMonth, currentYear) {
     return inBetweenMonths
 }
 
-
-
+let inBetweenDates;
 if (userHasDatabase) {
     const userInfo = await getUser(userToken)
     if (userInfo["Error"]) {
@@ -111,7 +121,7 @@ if (userHasDatabase) {
         throw console.error(userInfo["Error"]);
     }
 
-    const inBetweenDates = calcBetweenTime(userInfo["selectedDate"])
+    inBetweenDates = calcBetweenTime(userInfo["selectedDate"])
 
     document.getElementById('time-frame-selector').classList.remove('hidden')
     document.getElementById('create').classList.add('hidden')
@@ -126,4 +136,43 @@ if (!userHasDatabase) {
         const randomNum = Math.floor( Math.random() * 9999999 )
         displayNum(randomNum)
     }, 3000);
+}
+
+const timeFrameSelector = document.getElementById('time-frame-selector')
+timeFrameSelector.onchange = () => {
+    resetTimer()
+
+    if (timeFrameSelector.value === 'days') displayNum(inBetweenDates) 
+
+    if (timeFrameSelector.value === 'years') displayNum(Math.floor( inBetweenDates / 365 )) 
+    if (timeFrameSelector.value === 'weeks') displayNum(Math.floor( inBetweenDates / 7 )) 
+
+    if (timeFrameSelector.value === 'months') {
+        const yearsInbetween = userYear - currentYear
+
+        let inBetween = 0
+        for(var i = 0; i < yearsInbetween + 1; i++) {
+            // Adds the months between the current month and Dec
+            if (i === 0) {
+                const inBetweenMonths = 12 - (currentMonth - 1)
+                inBetween += inBetweenMonths
+            }
+    
+            // Adds the months for a full year
+            if (i !== 0 && i !== yearsInbetween) {
+                inBetween += 12
+            }
+    
+            // Adds the months between Jan and the month enter by the user
+            if (i !== 0 && i === yearsInbetween) {
+                const inBetweenMonths = userMonth
+                inBetween += inBetweenMonths
+
+                // let inBetweenMonths = calcBetweenMonths(0, userMonth, currentYear)
+                // inBetweenDates += inBetweenMonths
+            }
+        }
+
+        displayNum(inBetween)
+    }
 }
