@@ -1,3 +1,4 @@
+import { createErrorToast } from './error'
 import './style.css'
 import { getUser } from './users'
 
@@ -105,9 +106,9 @@ function calcBetweenMonths(startMonth, endMonth, currentYear) {
 
 if (userHasDatabase) {
     const userInfo = await getUser(userToken)
-    if (userInfo["Error"]) { 
+    if (userInfo["Error"]) {
+        createErrorToast(userInfo["Error"])
         throw console.error(userInfo["Error"]);
-         
     }
 
     const inBetweenDates = calcBetweenTime(userInfo["selectedDate"])

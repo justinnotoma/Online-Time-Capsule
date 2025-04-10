@@ -36,6 +36,47 @@ h1 {
     font-size: 3rem;
 }
 
+.toast {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: fit-content;
+    min-width: 320px;
+    height: 70px;
+    padding: 0.5rem;
+    
+    background-color: #ff0c51;
+
+    & i {
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+}
+
+.toast.show-animation { animation: showToast 1s forwards; }
+.toast.hide-animation { animation: showToast 1s forwards reverse; }
+
+@keyframes showToast {
+    from {
+        position: absolute;
+        top: -150px;
+        left: 50%;
+    }
+
+    to {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+    }
+}
+
 .timer-wrapper {
     position: relative;
     display: flex;
@@ -114,6 +155,7 @@ h1 {
     border: none;
     
     transition: all 0.5s;
+    cursor: pointer;
 }
 
 #create {
