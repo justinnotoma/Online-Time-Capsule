@@ -29,7 +29,7 @@ export default async ({req, res, log, error}) => {
                 reqUserInfo.documents[0].$id
             )
 
-            return res.json({ data: reqDB.documents })
+            return res.json({ message: "user was successfully deleted" })
         } catch (error) {
             return res.json({
                 code: error["code"],
