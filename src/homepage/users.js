@@ -12,7 +12,7 @@ export async function deleteUser(userToken) {
     try {
         const req = await functions.createExecution(FUNCTION_ID, JSON.stringify({ "userId": userToken, "message": "test" }), undefined, undefined, ExecutionMethod.DELETE)
         const res = await req
-        console.log(res)
+        console.log(res.responseBody)
     } catch (error) {
         console.log(error)
     }
