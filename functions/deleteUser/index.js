@@ -11,7 +11,7 @@ export default async ({req, res, log, error}) => {
     const db = new Databases(client)
 
     if (req.method == 'delete') {
-        const data = JSON.parse(body)
+        const data = JSON.parse(req.body)
         return res.send({ data: data })
         // return res.send({ message: "user was deleted" })
     } else {
