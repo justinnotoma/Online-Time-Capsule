@@ -8,7 +8,6 @@ export default async ({req, res, log, error}) => {
     const client = new Client()
     client.setEndpoint('https://cloud.appwrite.io/v1')
     client.setProject(PROJECT_ID)
-g
     const db = new Databases(client)
 
     if (req.method == 'delete') {
