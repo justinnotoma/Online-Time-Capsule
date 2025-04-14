@@ -15,12 +15,18 @@ export default async ({req, res, log, error}) => {
         const data = JSON.parse(req.body)
 
         try {
-            const reqDB = await db.listDocuments(
+            const reqUserInfo = await db.listDocuments(
                 DB_ID,
                 COLLECTION_USERINFO_ID,
                 [
                     Query.equal('userToken', [data["userId"]])
                 ]
+            )
+
+            db.deleteDocument(
+                DB_ID,
+                COLLECTION_USERINFO_ID,
+                reqUserInfo.documents[0].$id
             )
 
             return res.json({ data: reqDB.documents })
