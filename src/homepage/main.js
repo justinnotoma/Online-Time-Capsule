@@ -1,6 +1,6 @@
 import { createErrorToast } from './error'
 import './style.css'
-import { getUser } from './users'
+import { deleteUser, getUser } from './users'
 
 const userToken = localStorage.getItem('userToken')
 const userHasDatabase = localStorage.getItem('userHasDatabase')
@@ -192,5 +192,5 @@ document.getElementById('denied').addEventListener('click', e=> document.getElem
 
 document.getElementById('confirm').addEventListener('click', e=> {
     document.getElementById('confirm-model').classList.remove('show')
-    console.log('delete')
+    deleteUser(userToken)
 })

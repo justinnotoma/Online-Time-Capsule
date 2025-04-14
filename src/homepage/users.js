@@ -6,6 +6,18 @@ const client = new Client()
     .setProject(projectID)
 const functions = new Functions(client)
 
+export async function deleteUser(userToken) {
+    const FUNCTION_ID = "67fd3d810023ad4d8b1e"
+
+    try {
+        const req = await functions.createExecution(FUNCTION_ID, JSON.stringify({ "userId": userToken, "message": "test" }), undefined, undefined, ExecutionMethod.DELETE)
+        const res = await req
+        console.log(res)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 /**
  * This function gets every user in the database and search through them using the "userToken" to determine the right user
  * @param {String} userToken 
