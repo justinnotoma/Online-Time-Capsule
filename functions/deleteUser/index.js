@@ -18,8 +18,12 @@ export default async ({req, res, log, error}) => {
             const reqDB = await db.listDocuments(
                 DB_ID,
                 COLLECTION_USERINFO_ID,
-                Query.equal('userId', [data["userId"]])
+                [
+                    Query.equal('userId', [data["userId"]])
+                ]
             )
+
+            return res.json({ data: reqDB.documents })
         } catch (error) {
             return res.json({
                 code: error["code"],
@@ -28,7 +32,6 @@ export default async ({req, res, log, error}) => {
             })    
         }
 
-        return res.json({ data: reqDB.documents })
     } else {
         return res.json({
             code: 405,
