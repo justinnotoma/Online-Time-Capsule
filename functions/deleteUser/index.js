@@ -10,11 +10,14 @@ export default async ({req, res, log, error}) => {
     client.setProject(PROJECT_ID)
     const db = new Databases(client)
 
-    if (req.method == 'delete') {
+    if (req.method == 'DELETE') {
         const data = JSON.parse(body)
-        return res.send({ data: data })
-        // return res.send({ message: "user was deleted" })
+        return res.json({ data: data })
     } else {
-        return res.status(405).json({ message: "405: Invaid method" })
+        return res.json({
+            code: 405,
+            message: "Method must be a DELETE method",
+            type: "Invaid Method"
+        })
     }
 }
