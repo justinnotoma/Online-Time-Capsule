@@ -115,6 +115,11 @@ function calcBetweenMonths(startMonth, endMonth, currentYear) {
 
 let inBetweenDates;
 if (userHasDatabase) {
+    if (!userToken) {
+        createErrorToast({"message": "404: could not find user token"})
+        throw console.log("404: could not find user token")
+    }
+
     const userInfo = await getUser(userToken)
     if (userInfo["Error"]) {
         createErrorToast(userInfo["Error"])
@@ -167,12 +172,25 @@ timeFrameSelector.onchange = () => {
             if (i !== 0 && i === yearsInbetween) {
                 const inBetweenMonths = userMonth
                 inBetween += inBetweenMonths
-
-                // let inBetweenMonths = calcBetweenMonths(0, userMonth, currentYear)
-                // inBetweenDates += inBetweenMonths
             }
         }
 
         displayNum(inBetween)
     }
 }
+
+// Create time capsule button
+document.getElementById('create').addEventListener('click', e=>  location.href = "http://localhost:5173/src/creations/index.html" )
+
+// Delete time capsule
+
+// Delete time capsule button
+document.getElementById('delete').addEventListener('click', e=> document.getElementById('confirm-model').classList.add('show') )
+
+// Confirm time capsule deletion buttons
+document.getElementById('denied').addEventListener('click', e=> document.getElementById('confirm-model').classList.remove('show') )
+
+document.getElementById('confirm').addEventListener('click', e=> {
+    document.getElementById('confirm-model').classList.remove('show')
+    console.log('delete')
+})
