@@ -11,7 +11,7 @@ export default async ({req, res, log, error}) => {
     const db = new Databases(client)
 
     if (req.method == 'DELETE') {
-        const data = JSON.parse(body)
+        const data = JSON.parse(req.body)
         return res.json({ data: data })
     } else {
         return res.json({
