@@ -5,10 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   </head>
   <body>
     <h1>Time Capsule Timer</h1>
     
+    <!-- 
+      Error Toast notification
+      <div class="toast show">
+        <p id="error-code"> <strong>Error 404:</strong> </p>
+        <p id="error-message">Could not find user</p>
+        <i class='bx bx-x remove'></i>
+      </div> -->
+
     <!-- Timer -->
     <main class="timer-wrapper">
 
@@ -114,6 +123,23 @@
         <button class="btn" id="create">Create Time Capsule</button>
         <button class="btn hidden" id="delete">Delete Time Capsule</button>
 
+      <div class="confirm-model" id="confirm-model">
+        <section class="header">
+          <h1>Warning</h1>
+        </section>
+
+        <article class="warning-message">
+          <p>
+            You are about to <b>PERMANENTLY</b> delete your current time capsule. </br>
+            Do you wish to continue?
+          </p>
+        </article>
+
+        <footer class="model-btns">
+          <button class="model-btn" id="confirm">Yes</button>
+          <button class="model-btn" id="denied">No</button>
+        </footer>
+      </div>
     <!--<a href="./src/creations/index.html">Create Time capsule</a>
     <a href="./src/viewing/">View Time capsule</a>-->
     
