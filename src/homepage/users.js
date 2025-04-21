@@ -14,7 +14,7 @@ export async function deleteUser(userToken) {
         const res = await req
         console.log(res.responseBody)
     } catch (error) {
-        console.log(error)
+        return {"Error": error}
     }
 }
 

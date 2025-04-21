@@ -1,41 +1,20 @@
 import { createErrorToast } from './error'
 import './style.css'
+import { displayNum, resetTimer } from './timer'
 import { deleteUser, getUser } from './users'
 
 const userToken = localStorage.getItem('userToken')
 const userHasDatabase = localStorage.getItem('userHasDatabase')
 
 
-const todayDate = new Date()
-const currentYear = todayDate.getFullYear()
-const currentMonth = todayDate.getMonth() + 1
-const currentDate = todayDate.getDate()
+let todayDate = new Date()
+let currentYear = todayDate.getFullYear()
+let currentMonth = todayDate.getMonth() + 1
+let currentDate = todayDate.getDate()
 
 let userYear;
 let userMonth;
 let userDate;
-
-
-/**
- * Display a number of the timer
- * @param {Number} num 
- */
-function displayNum(num) {
-    const numDigits = num.toString().split('')
-    const digitWrappers = document.getElementsByClassName('digit-wrapper')
-
-    const startingDigit = 7 - numDigits.length
-    
-    numDigits.forEach((digit, index) => {
-        const numShift = parseInt(digit) * -92.5
-        digitWrappers[index + startingDigit].style.transform = `translateY(${numShift}px)`
-    })
-}
-
-function resetTimer() {
-    const digitWrappers = document.getElementsByClassName('digit-wrapper')
-    for(const digitWrapper of digitWrappers) { digitWrapper.style.transform = `translateY(0px)` }
-}
 
 /**
  * Find one user and return the user data
@@ -114,7 +93,7 @@ function calcBetweenMonths(startMonth, endMonth, currentYear) {
 }
 
 let inBetweenDates;
-if (userHasDatabase) {
+if (userHasDatabase == 'true') {
     if (!userToken) {
         createErrorToast({"message": "404: could not find user token"})
         throw console.log("404: could not find user token")
@@ -133,10 +112,22 @@ if (userHasDatabase) {
     document.getElementById('delete').classList.remove('hidden')
 
     displayNum(inBetweenDates)
+
+    // Start count
+    setInterval(() => {
+        if (currentDate !== new Date().getDate()) {
+            if (currentYear !== new Date().getFullYear()) currentYear = new Date().getFullYear()
+            if (currentMonth !== new Date().getMonth() + 1) currentMonth = new Date().getMonth() + 1
+            
+            currentDate = new Date().getDate()
+            inBetweenDates = calcBetweenTime(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`)
+            displayNum(inBetweenDates)
+        }
+    }, 1000);
 }
 
 
-if (!userHasDatabase) {
+if (userHasDatabase == 'false' || !userHasDatabase) {
     setInterval(() => {
         const randomNum = Math.floor( Math.random() * 9999999 )
         displayNum(randomNum)
@@ -190,7 +181,14 @@ document.getElementById('delete').addEventListener('click', e=> document.getElem
 // Confirm time capsule deletion buttons
 document.getElementById('denied').addEventListener('click', e=> document.getElementById('confirm-model').classList.remove('show') )
 
-document.getElementById('confirm').addEventListener('click', e=> {
+document.getElementById('confirm').addEventListener('click', async e=> {
     document.getElementById('confirm-model').classList.remove('show')
-    deleteUser(userToken)
+    const result = await deleteUser(userToken)
+
+    if (result["Error"]) {
+        createErrorToast(result["Error"])
+    } else {
+        localStorage.setItem('userHasDatabase', false)
+        location.reload()
+    }
 })
